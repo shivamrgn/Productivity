@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Offline Productivity</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="style.css" />
+<script defer src="app.js"></script>
+</head>
+
+<body>
+
+<div class="app">
+  <div class="topbar">
+    <div class="title">
+      <h1>Productivity</h1>
+      <p class="subtitle">Offline dashboard • <span id="selectedDateLabel"></span></p>
+    </div>
+  </div>
+
+  <div id="readOnlyBanner" class="banner" hidden>
+    Viewing <span id="readOnlyDate"></span> — read-only (past dates can’t be edited).
+  </div>
+
+  <div class="grid">
+    <div class="section today-section">
+      <h2 id="todayHeading">Today</h2>
+
+      <h3>Important</h3>
+      <div id="important" aria-label="Important tasks"></div>
+
+      <h3>Moderate</h3>
+      <div id="moderate" aria-label="Moderate tasks"></div>
+
+      <details id="templateEditor" class="editor" style="margin-top: 12px;">
+        <summary>Customize important &amp; moderate tasks</summary>
+        <div class="editor-grid">
+          <div class="editor-col">
+            <div class="editor-title">Important</div>
+            <div id="impTemplateList" class="template-list" aria-label="Important template tasks"></div>
+            <div class="task-row" style="margin-top:10px;">
+              <input id="impTemplateInput" placeholder="Add important task…" />
+              <button class="btn small primary" onclick="addTemplateTask('important')">Add</button>
+            </div>
+          </div>
+
+          <div class="editor-col">
+            <div class="editor-title">Moderate</div>
+            <div id="modTemplateList" class="template-list" aria-label="Moderate template tasks"></div>
+            <div class="task-row" style="margin-top:10px;">
+              <input id="modTemplateInput" placeholder="Add moderate task…" />
+              <button class="btn small primary" onclick="addTemplateTask('moderate')">Add</button>
+            </div>
+          </div>
+        </div>
+        <div class="muted" style="margin-top:10px;">
+          Changes are saved permanently and will be used for new days. Today updates immediately.
+        </div>
+      </details>
+
+      <h3>Daily</h3>
+      <div class="task-row" style="margin: 8px 0 6px;">
+        <input id="dailyInput" placeholder="Add a daily task…" />
+        <button id="addDailyBtn" class="btn primary" onclick="addDaily()">Add</button>
+      </div>
+      <div id="daily" aria-label="Daily tasks"></div>
+      <p class="muted" style="margin: 12px 2px 0;">Tip: click a date bar to review past days.</p>
+    </div>
+
+    <div class="right-col">
+      <div class="section monthly-section">
+        <h2>Monthly completion</h2>
+        <div id="dateStrip" aria-label="Monthly completion by date"></div>
+      </div>
+
+      <div class="section calendar-section" aria-label="Calendar">
+        <h2>Calendar</h2>
+        <div class="calendar-header">
+          <button class="btn small" onclick="prevCalMonth()" aria-label="Previous month">‹</button>
+          <div class="calendar-title" id="calTitle" aria-live="polite"></div>
+          <button class="btn small" onclick="nextCalMonth()" aria-label="Next month">›</button>
+        </div>
+        <div class="calendar-weekdays" aria-hidden="true">
+          <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+        <div class="muted calendar-hint">Click a day to view its saved tasks + journal.</div>
+      </div>
+    </div>
+
+    <div class="section selected-day-section">
+      <h2>Selected day</h2>
+      <div id="donuts" aria-label="Completion breakdown">
+        <div id="impDonut" class="donut" aria-label="Important completion"></div>
+        <div id="modDonut" class="donut" aria-label="Moderate completion"></div>
+        <div id="dayDonut" class="donut" aria-label="Daily completion"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section journal-section">
+    <h2>Journal</h2>
+    <textarea id="journal" rows="7" placeholder="Write a quick note for the day…"></textarea>
+    <div style="display:flex; justify-content:flex-end; margin-top:10px;">
+      <button id="saveJournalBtn" class="btn" onclick="saveJournal()">Save</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
